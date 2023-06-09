@@ -1,0 +1,96 @@
+---
+title: "Homework2"
+author: "Daniel Kye"
+date: "2023-06-09"
+output: html_document
+---
+
+# Review
+library(tidyverse)
+library(ggplot2)
+data <- mtcars
+str(data)
+summary(data)
+data %>% 
+  group_by(cyl) %>%
+  summarise(AVG = mean(mpg, na.rm=T),
+            SD = sd(mpg, na.rm=T),
+            Median = median(mpg, na.rm=T))
+data$cyl <- as.factor(data$cyl)
+data %>% 
+  group_by(cyl) %>%
+  ggplot(aes(x = wt, y = mpg, color = cyl))+geom_point()
+
+# Homework Part 1 - Negative Correlation
+# Negative correlation: A student's number of days absent vs Grade
+df <- data.frame(ABSENTDAY = c(5,2,3,7,8,9,12,4,1,0,6,7,7,3,2), GRADE = c(91.2,91.5,90.1,90.0,89.1,89.5,85.7,91.0,94.1,95.8,94.5,93.7,94.3,93.7,94.8))
+cor(df)
+# Correlation Coefficient is 0.6897183.
+df %>% 
+  ggplot(aes(ABSENTDAY,GRADE))+geom_point()
+
+# Homework Part 2 - Mean and Variance Functions
+# Making functions that perform mean and variance calculation
+meanfunction <- function(x){
+  out <- sum(x)/length(x)
+  return(out)
+}      
+meanfunction(c(1,2,3))
+
+varfunction <- function(x){
+  a <- sum(x)/length(x)
+  out <- sum((x-a)^2)/(length(x)-1)
+  return(out)
+}
+varfunction(c(1,2,3))
+
+# Homework Part 3 - Flower Analysis
+iris
+# Feature들의 분포적 특징 through box plot 
+iris %>%
+  group_by(Species) %>%
+  ggplot(aes(Species,Sepal.Length))+geom_boxplot()
+iris %>%
+  group_by(Species) %>%
+  ggplot(aes(Species,Sepal.Width))+geom_boxplot()
+iris %>%
+  group_by(Species) %>%
+  ggplot(aes(Species,Petal.Length))+geom_boxplot()
+iris %>%
+  group_by(Species) %>%
+  ggplot(aes(Species,Petal.Width))+geom_boxplot()
+
+# 상관성 분석 through scatter plots
+
+# Sepal Length vs Sepal Width
+iris %>%
+  group_by(Species) %>%
+  ggplot(aes(Sepal.Length,Sepal.Width,color = Species))+geom_point()
+# There is a positive correlation between sepal length and width.
+
+# Sepal Length vs Petal Length
+iris %>%
+  group_by(Species) %>%
+  ggplot(aes(Sepal.Length,Petal.Length,color = Species))+geom_point()
+# The general trend is that both petal length and sepal length tend to be biggest in virginica and smallest in setosa. Slightly positive or no correlation for setosa, and slightly positive correlation for the rest two species.
+
+# Sepal Length vs Petal Width
+iris %>%
+  group_by(Species) %>%
+  ggplot(aes(Sepal.Length,Petal.Width,color = Species))+geom_point()
+# In terms of both sepal length and petal width, virginica > versicolor > setosa. The correlation between those two variables isn't positive nor negative.
+
+# Sepal Width vs Petal Length
+iris %>%
+  group_by(Species) %>%
+  ggplot(aes(Sepal.Width,Petal.Length,color = Species))+geom_point()
+
+# Sepal Width vs Petal Width
+iris %>%
+  group_by(Species) %>%
+  ggplot(aes(Sepal.Width,Petal.Width,color = Species))+geom_point()
+
+# Petal Length vs Petal Width
+iris %>%
+  group_by(Species) %>%
+  ggplot(aes(Petal.Length,Petal.Width,color = Species))+geom_point()
