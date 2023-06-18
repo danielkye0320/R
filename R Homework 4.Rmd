@@ -1,0 +1,68 @@
+# Homework Part 1(a)
+a <-sample(1:110,100)
+hist(a)
+shapiro.test(a)
+
+# Homework Part 1(b)
+b <- rnorm(100,0,1)
+print(b)
+hist(b)
+shapiro.test(b)
+
+# Homework Part 2
+# Anderson-Darling is another way to test normality.
+install.packages("nortest")
+library(nortest)
+ad.test(a)
+ad.test(b)
+iris
+shapiro.test(iris$Sepal.Length)
+shapiro.test(iris$Sepal.Width)
+shapiro.test(iris$Petal.Length)
+shapiro.test(iris$Petal.Width)
+ad.test(iris$Sepal.Length)
+ad.test(iris$Sepal.Width)
+ad.test(iris$Petal.Length)
+ad.test(iris$Petal.Width)
+
+# Homework Part 3
+# Bartlett's test is another way to test 등분산성
+A <- iris$Sepal.Length
+B <- iris$Sepal.Width
+C <- iris$Petal.Length
+D <- iris$Sepal.Width
+bartlett.test(list(A,B))
+bartlett.test(list(A,C))
+bartlett.test(list(A,D))
+bartlett.test(list(B,C))
+bartlett.test(list(B,D))
+bartlett.test(list(C,D))
+
+# Homework Part 4
+install.packages("MASS")
+library(MASS)
+Pima.tr
+str(Pima.tr)
+shapiro.test(Pima.tr$glu)
+shapiro.test(Pima.tr$bp)
+shapiro.test(Pima.tr$skin)
+shapiro.test(Pima.tr$bmi)
+shapiro.test(Pima.tr$ped)
+shapiro.test(Pima.tr$age)
+install.packages("car")
+A <- Pima.tr$glu
+as.numeric(A)
+B <- Pima.tr$bp
+as.numeric(B)
+C <- Pima.tr$skin
+as.numeric(C)
+D <- Pima.tr$bmi
+as.numeric(D)
+E <- Pima.tr$ped
+as.numeric(E)
+F <- Pima.tr$age
+as.numeric(F)
+library(car)
+bartlett.test(list(A,B))
+bartlett.test(list(A,C))
+bartlett.test(list(B,D))
