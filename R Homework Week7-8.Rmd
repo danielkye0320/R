@@ -1,0 +1,36 @@
+# Week 7 실습
+# First exercise
+mtcars
+dat <- mtcars
+cor.test(dat$hp, dat$mpg)
+plot(dat$hp, dat$mpg)
+abline(lm.fit(dat$hp, dat$mpg))
+cor.test(dat$wt, dat$mpg)
+plot(dat$wt, dat$mpg)
+# Analysis: The hp and mpg values in mtcars show a fairly strong negative correlation. 
+
+# Second exercise
+iris
+flowerdata <- iris
+cor.test(flowerdata$Sepal.Length, flowerdata$Sepal.Width)
+plot(flowerdata$Sepal.Length, flowerdata$Sepal.Width)
+# Analysis: The sepal length and width values have no correlation. 
+
+cor.test(flowerdata$Petal.Length, flowerdata$Petal.Width)
+plot(flowerdata$Petal.Length, flowerdata$Petal.Width)
+
+# Third exercise
+ToothGrowth
+ojdata <- ToothGrowth
+cor.test(ojdata$dose, ojdata$len)
+plot(ojdata$dose, ojdata$len)
+# The correaltion value itself seems to show that there is a very strong positive correlation between dose and len. However, the plot shows that there are three clusters and there's no visible correlation between them.
+
+# Week 8 Exercise
+library(readxl)
+tipdata <- read_excel("카카오톡 받은 파일/[Week 7-8] tips.xlsx")
+View(X_Week_7_8_tips)
+model_1 = lm(total_bill ~ size, data = tipdata)
+summary(model_1)
+model_2 = lm(total_bill ~ tip + gender + smoker + day + time + size, data = tipdata)
+summary(model_2) # total_bill에 대한 다중 회귀 분석
