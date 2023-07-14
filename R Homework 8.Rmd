@@ -1,0 +1,13 @@
+# Additional Problems (5 and 6)
+
+# Problem 5
+install.packages("MASS")
+# Boston 데이터가 없음.
+
+# Problem 6
+ucla <-read.csv("https://stats.idre.ucla.edu/stat/data/binary.csv")
+str(ucla)
+admissiondata <- lm(admit ~ gre + gpa, data = ucla)
+admissiondata$admit <- factor(admissiondata$admit)
+summary(admissiondata)
+logadmissions <- glm(admit ~ gre + gpa, data = admissiondata)
