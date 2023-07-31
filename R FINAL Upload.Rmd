@@ -1,0 +1,257 @@
+# hw3
+# week3
+# 실습 5
+pf(2.35,10,20)
+
+# 실습 6
+print_calendar <- function(year, month){
+  if(month %in% c(1,3,5,7,8,10,12)){
+    return(31)
+  } else if(month == 2) {
+    if(year%%4==0 & year%%100 !=0){
+      return(29)
+    } else{
+      return(28)
+    }
+  } else {
+    return(30)
+  }
+}
+
+print_calendar(2023,6)
+
+print_calendar(2023,2)
+
+print_calendar(2020,2)
+
+# week4
+# 실습1
+x <- sample(100, replace = T)
+hist(x)
+
+
+shapiro.test(x)
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  x
+## W = 0.9457, p-value = 0.0004366
+x <- rnorm(100, 0, 1)
+hist(x)
+
+
+shapiro.test(x)
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  x
+## W = 0.98478, p-value = 0.3061
+x <- rnorm(1000, 0, 1)
+hist(x)
+
+
+shapiro.test(x)
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  x
+## W = 0.9992, p-value = 0.9545
+x <- rnorm(1000, 0, 1)
+hist(x)
+
+
+shapiro.test(x)
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  x
+## W = 0.99868, p-value = 0.6727
+### sample size 가 증가할수록 정규분포 형태에 더 가까워진다. 
+
+# 실습1
+library(MASS)
+library(rstatix)
+
+head(Pima.tr)
+
+?Pima.tr
+
+shapiro.test(Pima.tr$bmi)
+
+qqnorm(Pima.tr$bmi);qqline(Pima.tr$bmi)
+
+
+## 등분산성검정
+levene_test(data = Pima.tr, bmi~type)
+
+##week5
+#숙제3
+# 2(모분산 아는 경우)
+LI <- (750-700) - qnorm(0.975)*sqrt(40/25+45/30)
+UI <- (750-700) + qnorm(0.975)*sqrt(40/25+45/30)
+LI;UI
+
+# 3(모분산 아는 경우)
+LI <- (8-6) - qnorm(0.995)*sqrt(2^2/27+1/25) ##99% 신뢰구간
+UI <- (8-6) + qnorm(0.995)*sqrt(2^2/27+1/25)
+LI;UI
+
+# Week7
+# 실습 2
+dat <- iris
+head(dat)
+
+pairs(dat[1:4])
+
+
+mod.sepal <- lm(Sepal.Width ~ Sepal.Length, data = dat)
+summary(mod.sepal)
+
+mod.petal <- lm(Petal.Width ~ Petal.Length, data = dat)
+summary(mod.petal)
+
+# Week8
+# 실습 1
+library(readxl)
+library(ggplot2)
+dat <- read_excel("/Users/kke/Downloads/[Week 7-8] tips.xlsx")
+head(dat)
+
+dat %>% ggplot(aes(total_bill, tip, color = size, group = size)) + geom_point() + geom_smooth(method = 'lm', formula = 'y~x', se = FALSE)
+
+mod <- lm(tip ~ total_bill+size, data = dat)
+summary(mod)
+
+car::vif(mod)
+
+#실습강의자료3
+#예제5
+## 변수선택
+install.packages("MASS")
+library(MASS)
+str(Boston)
+
+lm_pre <- lm(medv~., data = Boston)
+
+lm_update <- lm(medv~.-crim, data = Boston)
+
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-zn, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_pre <- lm_update
+lm_update <- lm(medv~.-indus-crim, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-zn, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-chas, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-nox, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-rm, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-age, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_pre <- lm_update
+lm_update <- lm(medv~.-indus-age-crim, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-age-zn, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-age-chas, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-age-nox, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-age-rm, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-age-dis, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-age-rad, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-age-tax, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-age-ptratio, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-age-black, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+lm_update <- lm(medv~.-indus-age-lstat, data = Boston)
+summary(lm_pre)$adj.r.squared < summary(lm_update)$adj.r.squared
+
+summary(lm_pre)
+
+boston_fm <-lm(medv~., data=Boston)
+boston_rm <- step(boston_fm, direction="backward")
+
+summary(boston_rm)
+
+#Week9
+#과제4
+library(gmodels)
+dat <- iris
+dat$Species <- factor(dat$Species)
+CrossTable(dat$Species)
+
+levene_test(Sepal.Width ~ Species, data = dat)
+
+bartlett.test(Sepal.Width ~ Species, data = dat) 
+
+a<-aov(Sepal.Width~Species, data=dat)
+summary(a) 
+
+# 과제5
+df <- read_excel("~/Downloads/R_OneWay_ANOVA.xlsx")
+head(df)
+
+#데이터 변형
+ind <- c(rep("A", 30), rep("B", 30), rep("C", 30))
+dep <- c(df[,2], df[,3], df[,4])
+dep <- as.numeric(unlist(dep))
+df <- data.frame(ind,dep)
+
+#boxplot 그려보기
+boxplot(dep~ind,df)
+
+#등분산 검정
+#install.packages("lawstat")
+library(lawstat)
+df$ind <- as.factor(df$ind)##factor 변환 안하면 아래 test 에서 오류 
+levene_test(dep~ind, data = df)
+
+#분산분석
+my_aov <- aov(dep~ind,df)
+summary(my_aov)## 차이가 있다.
+
+# Week10
+# 실습 1
+dat <- iris
+unique(dat$Species)
+
+dat$Species <- factor(dat$Species)
+CrossTable(dat$Species)
+
+levene_test(Sepal.Length ~ Species, data = dat)
+
+pairwise.t.test(dat$Sepal.Length, dat$Species, p.adj="bonferroni")
+
+levene_test(Petal.Length ~ Species, data = dat)
+
+pairwise.t.test(dat$Petal.Length, dat$Species, p.adj="bonferroni")
